@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flávio Almeida</title>
+  <meta name="description"
+    content="Portfólio profissional de Flávio Almeida. Software Engineer (Engenheiro de Software) e Team Leader especializado em arquitetura de software, engenharia de sistemas e liderança técnica." />
+  <meta property="og:title" content="Flávio Almeida — Software Engineer & Team Leader" />
+  <meta property="og:description"
+    content="Portfólio profissional de Flávio Almeida. Software Engineer (Engenheiro de Software) e Team Leader especializado em arquitetura de software, engenharia de sistemas e liderança técnica." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body
+  class="bg-[#F0F0F0] text-[#111111] antialiased selection:bg-zinc-900 selection:text-white dark:bg-[#0f0f11] dark:text-[#f4f4f5] dark:selection:bg-white dark:selection:text-black">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
