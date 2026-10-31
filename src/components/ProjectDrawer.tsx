@@ -156,14 +156,35 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
 
           {/* Project Preview Image / GIF */}
           {project.image && (
-            <div className="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 shadow-md">
-              <img
-                src={project.image}
-                alt={`Preview de ${project.title}`}
-                loading="lazy"
-                className="w-full h-auto max-h-[300px] object-cover"
-              />
-            </div>
+            (project.isMobile || project.category.toLowerCase().includes('mobile')) ? (
+              <div className="py-2 flex flex-col items-center justify-center">
+                <div className="relative w-[195px] sm:w-[215px] aspect-[9/19] rounded-[38px] p-[8px] bg-gradient-to-b from-zinc-800 via-zinc-900 to-black dark:from-zinc-700 dark:via-zinc-800 dark:to-zinc-950 border-[3px] border-zinc-700/80 dark:border-zinc-600/80 shadow-2xl">
+                  {/* Dynamic Island */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 h-[15px] w-[64px] bg-black rounded-full border border-white/10" />
+                  <div className="relative w-full h-full rounded-[30px] overflow-hidden bg-black flex flex-col">
+                    <img
+                      src={project.image}
+                      alt={`Preview móvel de ${project.title}`}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top"
+                    />
+                    {/* Home bar */}
+                    <div className="absolute bottom-1 inset-x-0 z-20 flex justify-center pointer-events-none">
+                      <div className="w-20 h-1 bg-white/40 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 shadow-md">
+                <img
+                  src={project.image}
+                  alt={`Preview de ${project.title}`}
+                  loading="lazy"
+                  className="w-full h-auto max-h-[340px] object-cover"
+                />
+              </div>
+            )
           )}
 
           {/* Overview */}
@@ -219,7 +240,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
           </div>
 
           {/* Completed Features */}
-          <div className="p-5 rounded-xl bg-zinc-50 dark:bg-zinc-850/60 border border-zinc-200/70 dark:border-zinc-800">
+          <div className="p-5 rounded-xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200/70 dark:border-zinc-800">
             <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
               Funcionalidades Implementadas

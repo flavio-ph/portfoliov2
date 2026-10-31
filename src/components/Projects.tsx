@@ -1,263 +1,423 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { PROJECTS, ProjectItem } from '../data/portfolioData';
 import { ProjectDrawer } from './ProjectDrawer';
 import {
-  ArrowRight,
-  Shield,
-  Smartphone,
-  Globe,
-  Database,
+  ChevronLeft,
   ChevronRight,
   CheckCircle,
+  Globe,
+  Smartphone,
+  Database,
+  Shield,
+  Layers,
+  ArrowUpRight,
 } from 'lucide-react';
 
 export const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const featuredProject = PROJECTS.find((p) => p.featured) || PROJECTS[0];
-  const secondaryProjects = PROJECTS.filter((p) => !p.featured);
+  // Touch gesture support
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const handlePrev = useCallback(() => {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : PROJECTS.length - 1));
+  }, []);
+
+  const handleNext = useCallback(() => {
+    setActiveIndex((prev) => (prev < PROJECTS.length - 1 ? prev + 1 : 0));
+  }, []);
+
+  // Autoplay every 5s if user does not interact or hover
+  useEffect(() => {
+    if (isPaused || selectedProject) return;
+
+    const timer = setTimeout(() => {
+      handleNext();
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [activeIndex, isPaused, selectedProject, handleNext]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setIsPaused(true);
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    setIsPaused(false);
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+  };
+
+  // Keyboard navigation when drawer is closed
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedProject) return;
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
+
+      if (e.key === 'ArrowLeft') {
+        handlePrev();
+      } else if (e.key === 'ArrowRight') {
+        handleNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handlePrev, handleNext, selectedProject]);
+
+  // Project highlights helper
+  const getProjectHighlights = (project: ProjectItem) => {
+    if (project.id === 'edunotify') {
+      return [
+        { icon: Globe, color: 'text-sky-500', text: 'Aplicação Web Administrativa' },
+        { icon: Smartphone, color: 'text-emerald-500', text: 'App Móvel para Responsáveis' },
+        { icon: Database, color: 'text-amber-500', text: 'Modelagem Relacional Segura' },
+        { icon: Shield, color: 'text-purple-500', text: 'Autorização por Escopo (RBAC)' },
+      ];
+    }
+    return project.featuresCompleted.slice(0, 4).map((feat) => ({
+      icon: CheckCircle,
+      color: 'text-emerald-500',
+      text: feat,
+    }));
+  };
 
   return (
-    <section id="projetos" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-12 relative">
+    <section id="projetos" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-12 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="mb-14 sm:mb-20">
-          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-400 dark:text-zinc-500 mb-2">
-            Projetos <span className="text-zinc-950 dark:text-white font-extrabold">em destaque</span>
-          </h2>
-          <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-zinc-500 dark:text-zinc-400">
-            Aplicações, arquitetura, experimentação e soluções digitais.
-          </p>
+        {/* Section Header with Enlarged Carousel Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-10">
+          <div>
+            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-400 dark:text-zinc-500 mb-2">
+              Projetos <span className="text-zinc-950 dark:text-white font-extrabold">em destaque</span>
+            </h2>
+            <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-zinc-500 dark:text-zinc-400">
+              Aplicações, arquitetura, experimentação e soluções digitais.
+            </p>
+          </div>
+
+          {/* Project Counter */}
+          <div className="self-end sm:self-auto">
+            <span className="font-mono text-sm sm:text-base font-bold text-zinc-400 dark:text-zinc-500">
+              <span className="text-zinc-950 dark:text-white text-xl sm:text-2xl font-black">
+                0{activeIndex + 1}
+              </span>{' '}
+              / 0{PROJECTS.length}
+            </span>
+          </div>
         </div>
 
-        {/* Featured Project Showcase: EduNotify */}
+        {/* Quick Project Switcher Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-6 mb-2">
+          {PROJECTS.map((p, idx) => {
+            const isActive = idx === activeIndex;
+            return (
+              <button
+                key={p.id}
+                onClick={() => setActiveIndex(idx)}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                  isActive
+                    ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-md scale-105'
+                    : 'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800/80 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
+                }`}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full ${
+                    isActive ? 'bg-emerald-400 animate-pulse' : 'bg-zinc-400'
+                  }`}
+                />
+                <span>{p.title}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Carousel Showcase Container */}
         <div
-          className={`mb-16 rounded-[10px] bg-white dark:bg-zinc-900 border transition-all duration-300 overflow-hidden ${selectedProject?.id === featuredProject.id
-            ? 'border-zinc-900 dark:border-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)] ring-1 ring-zinc-900 dark:ring-white'
-            : 'border-black/5 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.08)]'
-            }`}
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="p-8 sm:p-12 lg:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6">
+          {/* Side Navigation Arrow: Previous (Desktop) */}
+          <button
+            onClick={handlePrev}
+            className="hidden md:flex absolute -left-5 lg:-left-7 top-1/2 -translate-y-1/2 z-20 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:text-white hover:bg-zinc-950 dark:hover:bg-white dark:hover:text-zinc-950 shadow-[0_10px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.6)] border border-black/10 dark:border-white/10 items-center justify-center hover:scale-110 active:scale-95 transition-all cursor-pointer"
+            aria-label="Projeto anterior"
+          >
+            <ChevronLeft className="w-6 h-6 lg:w-7 lg:h-7" strokeWidth={2.5} />
+          </button>
 
+          {/* Side Navigation Arrow: Next (Desktop) */}
+          <button
+            onClick={handleNext}
+            className="hidden md:flex absolute -right-5 lg:-right-7 top-1/2 -translate-y-1/2 z-20 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:text-white hover:bg-zinc-950 dark:hover:bg-white dark:hover:text-zinc-950 shadow-[0_10px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.6)] border border-black/10 dark:border-white/10 items-center justify-center hover:scale-110 active:scale-95 transition-all cursor-pointer"
+            aria-label="Próximo projeto"
+          >
+            <ChevronRight className="w-6 h-6 lg:w-7 lg:h-7" strokeWidth={2.5} />
+          </button>
 
-              <div>
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-zinc-950 dark:text-white">
-                  {featuredProject.title}
-                </h3>
-                <p className="text-base sm:text-lg font-medium text-zinc-500 dark:text-zinc-400 mt-2">
-                  {featuredProject.subtitle}
-                </p>
-              </div>
+          {/* Masked Slider Area: 100% full width per card with no partial cutoffs */}
+          <div
+            className="overflow-hidden rounded-[16px] border border-black/8 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-white dark:bg-zinc-900"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            >
+              {PROJECTS.map((project, idx) => {
+                const isMobile =
+                  Boolean(project.isMobile) ||
+                  project.category.toLowerCase().includes('mobile');
 
-              <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-xl">
-                {featuredProject.overview}
-              </p>
-
-              {/* Scope & Architecture Points */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-center gap-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200">
-                  <Globe className="w-4 h-4 text-sky-500" />
-                  <span>Aplicação Web Administrativa</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200">
-                  <Smartphone className="w-4 h-4 text-emerald-500" />
-                  <span>App Móvel para Responsáveis</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200">
-                  <Database className="w-4 h-4 text-amber-500" />
-                  <span>Modelagem Relacional Segura</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200">
-                  <Shield className="w-4 h-4 text-purple-500" />
-                  <span>Autorização por Escopo (RBAC)</span>
-                </div>
-              </div>
-
-              {/* Technologies */}
-              <div className="flex flex-wrap gap-2 pt-2">
-                {featuredProject.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200"
+                return (
+                  <div
+                    key={project.id}
+                    className="w-full shrink-0 min-w-full p-8 sm:p-10 lg:p-12 flex flex-col justify-center min-h-[480px] lg:min-h-[530px]"
                   >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* Action Button */}
-              <div className="pt-4">
-                <button
-                  onClick={() => setSelectedProject(featuredProject)}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-[10px] bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:text-zinc-950 font-medium text-sm transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.98]"
-                >
-                  <span>Ver detalhes e arquitetura</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Right Visual: Bespoke EduNotify Interface Simulation */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-md bg-zinc-50 dark:bg-zinc-850 rounded-[10px] p-4 sm:p-5 border border-zinc-200/80 dark:border-zinc-700/80 shadow-md flex flex-col gap-3 font-sans">
-                {/* Simulated Web Admin Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-700">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xs">
-                      E
-                    </div>
-                    <span className="text-xs font-bold text-zinc-900 dark:text-white">
-                      EduNotify Admin
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 font-semibold">
-                    ATIVO
-                  </span>
-                </div>
-
-                {/* Simulated Real-Time Access Stream */}
-                <div className="space-y-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-                    Fluxo de Acessos Recentes
-                  </span>
-
-                  {/* Item 1 */}
-                  <div className="p-2.5 rounded-[10px] bg-white dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-700/60 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <div>
-                        <div className="font-semibold text-zinc-900 dark:text-zinc-100">
-                          Lucas Silveira
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                      {/* Left Column: Details & Tech */}
+                      <div className="lg:col-span-6 space-y-5 sm:space-y-6">
+                        {/* Category & Project Counter */}
+                        <div className="flex items-center gap-2.5">
+                          <span className="text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200/60 dark:border-zinc-700/60">
+                            {project.category}
+                          </span>
+                          <span className="text-xs font-mono font-bold text-zinc-400 dark:text-zinc-500">
+                            PROJETO 0{idx + 1} DE 0{PROJECTS.length}
+                          </span>
                         </div>
-                        <div className="text-[10px] text-zinc-500">9º Ano A · Portaria Principal</div>
-                      </div>
-                    </div>
-                    <span className="text-[11px] font-mono text-zinc-500">07:28:14</span>
-                  </div>
 
-                  {/* Item 2 */}
-                  <div className="p-2.5 rounded-[10px] bg-white dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-700/60 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <div>
-                        <div className="font-semibold text-zinc-900 dark:text-zinc-100">
-                          Mariana Costa
+                        {/* Title & Subtitle */}
+                        <div>
+                          <h3 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-black tracking-tight text-zinc-950 dark:text-white">
+                            {project.title}
+                          </h3>
+                          <p className="text-base sm:text-lg font-medium text-zinc-500 dark:text-zinc-400 mt-2">
+                            {project.subtitle}
+                          </p>
                         </div>
-                        <div className="text-[10px] text-zinc-500">1º Ano Médio · Portão 2</div>
-                      </div>
-                    </div>
-                    <span className="text-[11px] font-mono text-zinc-500">07:31:02</span>
-                  </div>
 
-                  {/* Guardian Mobile Push Notification Alert */}
-                  <div className="mt-2 p-3 rounded-[10px] bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-900/40 flex items-start gap-2.5">
-                    <Smartphone className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-                    <div>
-                      <div className="text-xs font-bold text-blue-900 dark:text-blue-200">
-                        Notificação Enviada aos Responsáveis
+                        {/* Overview */}
+                        <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-xl">
+                          {project.overview}
+                        </p>
+
+                        {/* Highlights */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                          {getProjectHighlights(project).map((hl, i) => {
+                            const IconComp = hl.icon;
+                            return (
+                              <div
+                                key={i}
+                                className="flex items-center gap-2 text-xs font-semibold text-zinc-800 dark:text-zinc-200"
+                              >
+                                <IconComp className={`w-4 h-4 ${hl.color} shrink-0`} />
+                                <span className="truncate">{hl.text}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Technologies */}
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {project.technologies.slice(0, 7).map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-3 py-1 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200/50 dark:border-zinc-700/50"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {project.technologies.length > 7 && (
+                            <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-zinc-100/60 dark:bg-zinc-800/60 text-zinc-500">
+                              +{project.technologies.length - 7}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="pt-2 flex flex-wrap items-center gap-3">
+                          <button
+                            onClick={() => setSelectedProject(project)}
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-[10px] bg-zinc-950 hover:bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 font-bold text-sm tracking-tight transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.98]"
+                          >
+                            <span>Ver detalhes e arquitetura</span>
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+
+                          {project.demoUrl && project.demoUrl !== '#' && (
+                            <a
+                              href={project.demoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-[10px] text-sm font-semibold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors"
+                            >
+                              <span>Demo online</span>
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </a>
+                          )}
+                        </div>
                       </div>
-                      <div className="text-[11px] text-blue-700 dark:text-blue-300 leading-snug">
-                        Entrada confirmada no sistema às 07:31.
+
+                      {/* Right Column: Visual Mockup / Interface Preview */}
+                      <div className="lg:col-span-6 flex justify-center items-center w-full">
+                        {isMobile ? (
+                          /* Smartphone Frame for Mobile Apps */
+                          <div className="flex flex-col items-center w-full py-1">
+                            {/* Mobile App Label Bar */}
+                            <div className="flex items-center justify-between w-full max-w-[195px] sm:max-w-[210px] lg:max-w-[225px] mb-2 px-1">
+                              <span className="text-xs font-mono font-medium text-zinc-600 dark:text-zinc-400">
+                                {project.id}.mobile
+                              </span>
+                              <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-200/70 dark:bg-zinc-700/70 text-zinc-700 dark:text-zinc-300 font-semibold uppercase flex items-center gap-1.5">
+                                <Smartphone className="w-3 h-3 text-emerald-500" />
+                                Mobile App
+                              </span>
+                            </div>
+
+                            {/* Authentic Smartphone Chassis */}
+                            <div className="relative w-[195px] sm:w-[210px] lg:w-[225px] aspect-[9/19] rounded-[38px] sm:rounded-[40px] p-[8px] sm:p-[9px] bg-gradient-to-b from-zinc-800 via-zinc-900 to-black dark:from-zinc-700 dark:via-zinc-800 dark:to-zinc-950 border-[3px] border-zinc-700/80 dark:border-zinc-600/80 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)]">
+                              {/* Physical Hardware Buttons (Volume & Power) */}
+                              <span className="absolute -left-[4.5px] top-[70px] w-[3px] h-6 bg-zinc-600 dark:bg-zinc-500 rounded-l-sm" />
+                              <span className="absolute -left-[4.5px] top-[104px] w-[3px] h-9 bg-zinc-600 dark:bg-zinc-500 rounded-l-sm" />
+                              <span className="absolute -left-[4.5px] top-[148px] w-[3px] h-9 bg-zinc-600 dark:bg-zinc-500 rounded-l-sm" />
+                              <span className="absolute -right-[4.5px] top-[92px] w-[3px] h-12 bg-zinc-600 dark:bg-zinc-500 rounded-r-sm" />
+
+                              {/* Screen Glass Area */}
+                              <div className="relative w-full h-full rounded-[30px] sm:rounded-[32px] overflow-hidden bg-black flex flex-col group/screen">
+                                {/* Dynamic Island & Status Bar */}
+                                <div className="absolute top-0 inset-x-0 z-30 pt-1.5 px-3.5 flex items-center justify-between text-[9px] font-semibold text-white/90 select-none pointer-events-none">
+                                  <span>9:41</span>
+                                  <div className="h-[15px] sm:h-[17px] w-[62px] sm:w-[68px] bg-black rounded-full mx-auto flex items-center justify-between px-2 border border-white/10 shadow-sm">
+                                    <span className="w-2 h-2 rounded-full bg-zinc-900 ring-1 ring-zinc-700/60" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-950/80 ring-1 ring-blue-500/30" />
+                                  </div>
+                                  <div className="w-4 flex justify-end">
+                                    <div className="w-3.5 h-2 border border-white/80 rounded-[2px] p-[1px] flex items-center">
+                                      <div className="w-full h-full bg-white/80 rounded-[1px]" />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Media Content (Complete Vertical GIF / Video) */}
+                                {project.image ? (
+                                  <img
+                                    src={project.image}
+                                    alt={`Interface do app ${project.title}`}
+                                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/screen:scale-102"
+                                    loading="lazy"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex flex-col items-center justify-center text-zinc-400 p-6 text-center">
+                                    <Smartphone className="w-10 h-10 mb-2" />
+                                    <span className="text-xs font-medium">{project.title}</span>
+                                  </div>
+                                )}
+
+                                {/* Bottom Home Indicator Bar */}
+                                <div className="absolute bottom-1 inset-x-0 z-30 flex justify-center pointer-events-none">
+                                  <div className="w-20 sm:w-24 h-1 bg-white/40 rounded-full backdrop-blur-sm" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          /* Desktop Browser Mockup - Significantly Enlarged */
+                          <div className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl bg-zinc-50 dark:bg-zinc-800 rounded-[14px] p-[8px] border border-zinc-200/80 dark:border-zinc-700/80 shadow-[0_20px_50px_rgba(0,0,0,0.12)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.6)] flex flex-col gap-2 font-sans">
+                            {/* Window Header: App Name & Stack Badge */}
+                            <div className="flex items-center justify-between px-1.5 py-1 border-b border-zinc-200/60 dark:border-zinc-700/60">
+                              <span className="text-xs font-mono font-medium text-zinc-600 dark:text-zinc-400">
+                                {project.id}.app
+                              </span>
+                              <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-200/70 dark:bg-zinc-700/70 text-zinc-700 dark:text-zinc-300 font-semibold uppercase">
+                                {project.category}
+                              </span>
+                            </div>
+
+                            {/* Project Image Preview or Fallback */}
+                            <div className="relative rounded-[10px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-700/60 aspect-[16/10] flex items-center justify-center group/img">
+                              {project.image ? (
+                                <img
+                                  src={project.image}
+                                  alt={`Interface do projeto ${project.title}`}
+                                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/img:scale-105"
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <div className="flex flex-col items-center justify-center text-zinc-400 p-6 text-center">
+                                  <Layers className="w-8 h-8 mb-2" />
+                                  <span className="text-xs font-medium">{project.title}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </div>
 
-        {/* Secondary Projects Grid with Light/Dark Contrast matching reference */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {secondaryProjects.map((project) => {
-            const isDarkCard = project.theme === 'dark';
-            const isSelected = selectedProject?.id === project.id;
+        {/* Carousel Indicators / Mobile Navigation */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 px-1">
+          {/* Mobile Previous Button */}
+          <button
+            onClick={handlePrev}
+            className="sm:hidden w-full py-3 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-sm flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+          >
+            <ChevronLeft className="w-5 h-5" />
+            <span>Projeto Anterior</span>
+          </button>
 
-            return (
-              <div
-                key={project.id}
-                className={`p-8 sm:p-10 rounded-[10px] transition-all duration-300 flex flex-col justify-between ${isSelected
-                  ? 'ring-2 ring-zinc-900 dark:ring-white scale-[1.01]'
-                  : ''
-                  } ${isDarkCard
-                    ? 'bg-zinc-950 text-white shadow-xl border border-zinc-800'
-                    : 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white border border-black/5 dark:border-white/10 shadow-sm hover:shadow-md'
-                  }`}
-              >
-                <div>
-                  <div className="mb-4">
-                    <span
-                      className={`text-xs font-bold uppercase tracking-wider ${
-                        isDarkCard ? 'text-zinc-400' : 'text-zinc-400 dark:text-zinc-500'
-                      }`}
-                    >
-                      {project.category}
-                    </span>
-                  </div>
+          {/* Dots Indicator */}
+          <div className="flex items-center justify-center gap-2.5 mx-auto">
+            {PROJECTS.map((p, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveIndex(idx)}
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  idx === activeIndex
+                    ? 'w-10 bg-zinc-950 dark:bg-white shadow-sm'
+                    : 'w-2.5 bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-700 dark:hover:bg-zinc-600'
+                }`}
+                aria-label={`Ir para ${p.title}`}
+              />
+            ))}
+          </div>
 
-                  <h4 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
-                    {project.title}
-                  </h4>
-                  <p
-                    className={`text-xs sm:text-sm font-medium mb-4 ${isDarkCard ? 'text-zinc-400' : 'text-zinc-500 dark:text-zinc-400'
-                      }`}
-                  >
-                    {project.subtitle}
-                  </p>
-
-                  <p
-                    className={`text-sm leading-relaxed mb-6 ${isDarkCard ? 'text-zinc-300' : 'text-zinc-600 dark:text-zinc-300'
-                      }`}
-                  >
-                    {project.overview}
-                  </p>
-
-                  {/* Highlights */}
-                  <div className="space-y-1.5 mb-6">
-                    {project.featuresCompleted.slice(0, 2).map((feat, i) => (
-                      <div
-                        key={i}
-                        className={`flex items-center gap-2 text-xs ${isDarkCard ? 'text-zinc-300' : 'text-zinc-700 dark:text-zinc-300'
-                          }`}
-                      >
-                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className={`text-[11px] px-2.5 py-0.5 rounded-md font-medium ${isDarkCard
-                          ? 'bg-zinc-800 text-zinc-300'
-                          : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
-                          }`}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className={`inline-flex items-center gap-1.5 text-xs font-bold transition-transform hover:translate-x-1 cursor-pointer ${isDarkCard
-                      ? 'text-white hover:text-zinc-300'
-                      : 'text-zinc-950 dark:text-white hover:text-zinc-600'
-                      }`}
-                  >
-                    <span>Detalhes</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+          {/* Mobile Next Button */}
+          <button
+            onClick={handleNext}
+            className="sm:hidden w-full py-3 rounded-xl bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 font-bold text-sm flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+          >
+            <span>Próximo Projeto</span>
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
@@ -270,3 +430,5 @@ export const Projects: React.FC = () => {
     </section>
   );
 };
+
+

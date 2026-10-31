@@ -2,20 +2,17 @@ import React from 'react';
 import { Download, Send, Layers, GitCommit } from 'lucide-react';
 import { motion } from 'motion/react';
 import avatarImg from '@/assets/avatar.png';
+import cvPdf from '@/assets/CV - Flávio Almeida.pdf';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface HeroProps {
-  onOpenResume: () => void;
+  onOpenResume?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
-  const handleScrollToContact = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const contactSection = document.querySelector('#contato');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const whatsappUrl = `https://wa.me/${PERSONAL_INFO.phone}?text=${encodeURIComponent(
+    'Olá Flávio! Vim pelo seu portfólio e gostaria de conversar a respeito de uma oportunidade/projeto.'
+  )}`;
 
   return (
     <section
@@ -51,19 +48,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
 
           {/* Action CTAs */}
           <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
-            {/* Primary Action Button (Dark Pill) */}
-            <button
-              onClick={onOpenResume}
-              type="button"
-              className="inline-flex items-center justify-center px-7 py-3.5 sm:px-8 sm:py-4 rounded-[10px] bg-zinc-950 hover:bg-zinc-900 text-white font-bold text-sm sm:text-[15px] tracking-tight transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.35),0_4px_12px_rgba(0,0,0,0.18)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.45),0_6px_16px_rgba(0,0,0,0.22)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 dark:shadow-[0_12px_32px_rgba(255,255,255,0.15)] dark:hover:shadow-[0_16px_40px_rgba(255,255,255,0.25)]"
-            >
-              <span>Baixar currículo</span>
-            </button>
-
-            {/* Secondary Action Button (Light Glass with soft ambient shadow) */}
+            {/* Primary Action Button (Download CV) */}
             <a
-              href="#contato"
-              onClick={handleScrollToContact}
+              href={cvPdf}
+              download="CV - Flávio Almeida.pdf"
+              className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-[10px] bg-zinc-950 hover:bg-zinc-900 text-white font-bold text-sm sm:text-[15px] tracking-tight transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.35),0_4px_12px_rgba(0,0,0,0.18)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.45),0_6px_16px_rgba(0,0,0,0.22)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100 dark:shadow-[0_12px_32px_rgba(255,255,255,0.15)] dark:hover:shadow-[0_16px_40px_rgba(255,255,255,0.25)]"
+            >
+              <Download className="w-4 h-4" />
+              <span>Baixar currículo</span>
+            </a>
+
+            {/* Secondary Action Button (WhatsApp Contact) */}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-[10px] bg-[#F2F2F4]/90 hover:bg-white text-zinc-950 font-bold text-sm sm:text-[15px] tracking-tight backdrop-blur-xl border border-black/[0.04] dark:border-white/10 shadow-[0_14px_36px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_18px_44px_rgba(0,0,0,0.14),0_6px_16px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 dark:bg-zinc-900/85 dark:hover:bg-zinc-900 dark:text-white dark:shadow-[0_14px_36px_rgba(0,0,0,0.5)] dark:hover:shadow-[0_18px_44px_rgba(0,0,0,0.7)]"
             >
               <span>Me Contatar</span>

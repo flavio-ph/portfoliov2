@@ -60,7 +60,7 @@ export const Experience: React.FC = () => {
                   {exp.responsibilities.map((resp, idx) => (
                     <div
                       key={idx}
-                      className="flex items-start gap-2.5 p-3 rounded-[10px] bg-zinc-50 dark:bg-zinc-850/60 border border-black/5 dark:border-white/5"
+                      className="flex items-start gap-2.5 p-3 rounded-[10px] bg-zinc-50 dark:bg-zinc-800/60 border border-black/5 dark:border-white/5"
                     >
                       <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                       <span className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-snug">

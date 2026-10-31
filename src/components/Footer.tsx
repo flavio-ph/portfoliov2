@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
               </span>
             </a>
             <p className="mt-4 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-sm">
-              Software Engineer &amp; Team Leader. Construindo soluções digitais escaláveis, limpas e sustentáveis com foco em engenharia de software.
+              Software Engineer. Construindo soluções digitais escaláveis, limpas e sustentáveis com foco em engenharia de software.
             </p>
           </div>
 
@@ -110,6 +110,18 @@ export const Footer: React.FC = () => {
               Redes & Contato
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
+              <li>
+                <a
+                  href={`https://wa.me/${PERSONAL_INFO.phone}?text=${encodeURIComponent(
+                    'Olá Flávio! Vim pelo seu portfólio.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors"
+                >
+                  WhatsApp
+                </a>
+              </li>
               <li>
                 <a
                   href={PERSONAL_INFO.linkedin}

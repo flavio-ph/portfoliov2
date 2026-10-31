@@ -43,7 +43,8 @@ export interface ProjectItem {
   subtitle: string;
   category: string;
   featured?: boolean;
-  theme?: 'light' | 'dark';
+  theme?: 'light' | 'dark' | 'system';
+  isMobile?: boolean;
   image?: string;
   overview: string;
   challenge: string;
@@ -74,6 +75,9 @@ export const PERSONAL_INFO = {
   name: 'Flávio Almeida',
   role: 'Software Engineer',
   email: 'flaviophalmeida@gmail.com',
+  phone: '5579998975808',
+  phoneFormatted: '+55 (79) 99897-5808',
+  whatsappMessage: 'Olá Flávio! Vim pelo seu portfólio.',
   github: 'https://github.com/flavio-ph',
   linkedin: 'https://www.linkedin.com/in/fl%C3%A1vio-almeida-804827361/',
   bioShort:
@@ -116,7 +120,7 @@ export const PROFESSIONAL_PRINCIPLES = [
 
 export const CORE_DOMAINS: DomainProficiency[] = [
   {
-    label: 'Java & Spring Boot',
+    label: 'Java, Spring Boot & Golang',
     description: 'Back-end robusto, APIs RESTful e microsserviços',
     levelWidth: '92%',
   },
@@ -408,7 +412,35 @@ export const EXPERIENCES: ExperienceItem[] = [
     technologies: ['Java', 'Spring Boot', 'React', 'TypeScript', 'PostgreSQL', 'MySQL', 'Linux (Ubuntu)', 'Nginx', 'VPS', 'Docker', 'n8n', 'Bubble', 'Git', 'REST APIs'],
     isCurrent: true,
   },
-];
+  {
+    id: 'educador-tecnologia-prepara',
+    role: 'Educador de Tecnologia',
+    company: 'Prepara Cursos Profissionalizantes',
+    location: 'Simão Dias, Sergipe, Brasil',
+    period: '2022 – 2024',
+    type: 'Educação e Tecnologia',
+    description:
+      'Atuação na formação de novos profissionais em tecnologia, compartilhando conhecimentos de programação, desenvolvimento web e lógica computacional por meio de uma abordagem prática e orientada à resolução de problemas.',
+    responsibilities: [
+      'Ministração de aulas de programação, lógica computacional e desenvolvimento web, utilizando Java, JavaScript, HTML e CSS.',
+      'Elaboração de atividades práticas e projetos para aplicação dos conceitos de programação em cenários reais.',
+      'Orientação técnica na construção de aplicações, identificação de erros e resolução de problemas de programação.',
+      'Ensino de conceitos de Programação Orientada a Objetos, estruturação de código e boas práticas de desenvolvimento.',
+      'Acompanhamento individual da evolução dos alunos, estimulando autonomia, raciocínio lógico e pensamento computacional.',
+      'Adaptação de conteúdos e metodologias de ensino conforme o nível de conhecimento e as necessidades de aprendizagem.',
+    ],
+    technologies: [
+      'Java',
+      'JavaScript',
+      'HTML5',
+      'CSS3',
+      'Lógica de Programação',
+      'Programação Orientada a Objetos',
+      'Desenvolvimento Web',
+    ],
+    isCurrent: false,
+  },
+]
 
 export const EDUCATION: EducationItem = {
   id: 'ifs-si',
@@ -435,7 +467,7 @@ export const PROJECTS: ProjectItem[] = [
     category: 'Full-stack',
     featured: true,
     theme: 'light',
-    image: 'https://i.postimg.cc/4xD4tdnt/payment.gif',
+    image: 'https://i.postimg.cc/BvnRQHbB/Adobe-Express-Gravacao-de-Tela-2026-10-24-193413-(1).gif',
     overview:
       'Plataforma completa voltada ao controle de acesso de estudantes, permitindo acompanhamento pontual de entradas e saídas com visualização de informações por responsáveis e painéis administrativos por escopo institucional.',
     challenge:
@@ -472,6 +504,35 @@ export const PROJECTS: ProjectItem[] = [
       'Docker',
     ],
     githubUrl: 'https://github.com/flavio-ph',
+  },
+  {
+    id: 'edunotify-app',
+    title: 'EduNotify App',
+    subtitle: 'App de monitoramento escolar e controle de acesso em tempo real',
+    category: 'Mobile / Full-stack',
+    theme: 'system',
+    isMobile: true,
+    image: 'https://i.postimg.cc/ZnsS4HFP/Adobe-Express-Edu-Notify-App.gif',
+    overview:
+      'Aplicativo móvel desenvolvido para pais e responsáveis acompanharem a rotina escolar de seus filhos, oferecendo notificações instantâneas sobre entradas e saídas, histórico de catraca, frequência e comunicados institucionais.',
+    challenge:
+      'Sincronizar eventos físicos de hardware (catracas) com notificações push em tempo real, além de gerenciar dados sensíveis de menores em conformidade com a LGPD e processar cálculos dinâmicos de frequência escolar.',
+    solution:
+      'Aplicativo construído com React Native e Expo (TypeScript), utilizando Expo Router para navegação avançada. Conta com um sistema de temas dinâmico, Context API para gerenciamento de estado e integração com serviços de Push Notification (FCM/Expo).',
+    myContribution: [
+      'Desenvolvimento integral do front-end mobile utilizando React Native, Expo e TypeScript.',
+      'Implementação e gerenciamento de notificações push em tempo real para alertas de acesso.',
+      'Desenvolvimento da lógica de cálculo de frequência escolar e calendário interativo de recessos.',
+      'Criação de um Design System responsivo com suporte nativo a temas Claro e Escuro (Dark Mode).',
+    ],
+    featuresCompleted: [
+      'Monitoramento em tempo real de entradas, saídas e fim de turno',
+      'Cálculo automático de % de frequência escolar e faltas',
+      'Gestão centralizada de múltiplos dependentes em uma única conta',
+      'Recepção de comunicados escolares e atestados médicos',
+    ],
+    technologies: ['React Native', 'Expo', 'TypeScript', 'Expo Router', 'Context API'],
+    githubUrl: 'https://github.com/seu-usuario/edunotify', // Atualize com seu link real
   },
   {
     id: 'metricflow',
@@ -532,8 +593,9 @@ export const PROJECTS: ProjectItem[] = [
     id: 'finanquest',
     title: 'FinanQuest',
     subtitle: 'App mobile de controle financeiro pessoal com gamificação',
-    category: 'Full-stack',
+    category: 'Mobile / Full-stack',
     theme: 'light',
+    isMobile: true,
     image: '/projects/finanquest.gif',
     overview:
       'Aplicativo móvel que combina gestão financeira pessoal com elementos lúdicos de metas e conquistas para incentivar a disciplina de poupança e investimentos sustentáveis.',

@@ -87,7 +87,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* Challenge & Solution Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-5 rounded-[10px] bg-zinc-50 dark:bg-zinc-850/70 border border-black/5 dark:border-white/5">
+            <div className="p-5 rounded-[10px] bg-zinc-50 dark:bg-zinc-800/70 border border-black/5 dark:border-white/5">
               <h5 className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-2 flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" />
                 Desafio Técnico & Negócio
@@ -97,7 +97,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               </p>
             </div>
 
-            <div className="p-5 rounded-[10px] bg-zinc-50 dark:bg-zinc-850/70 border border-black/5 dark:border-white/5">
+            <div className="p-5 rounded-[10px] bg-zinc-50 dark:bg-zinc-800/70 border border-black/5 dark:border-white/5">
               <h5 className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-2 flex items-center gap-1.5">
                 <Cpu className="w-4 h-4" />
                 Solução Implementada

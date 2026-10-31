@@ -85,21 +85,24 @@ export const About: React.FC = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                {/* Main signature stroke starting with cursive 'f' */}
                 <path
-                  d="M15 50 C25 15, 35 10, 45 35 C50 50, 52 55, 65 30 C75 10, 80 40, 95 38 C105 35, 115 45, 125 40 C140 32, 145 20, 160 35 C175 45, 185 25, 205 32"
+                  d="M16 42 C18 24, 25 10, 34 10 C41 10, 40 22, 33 44 C27 60, 24 72, 30 72 C36 72, 38 58, 42 40 C48 34, 56 42, 66 30 C76 16, 82 40, 95 38 C105 34, 115 44, 125 39 C140 32, 148 22, 160 35 C175 45, 185 25, 205 32"
                   stroke="currentColor"
                   strokeWidth="2.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
+                {/* Crossbar of the initial 'f' */}
                 <path
-                  d="M20 38 L55 35"
+                  d="M20 38 L46 36"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                 />
+                {/* Dynamic underline flourish */}
                 <path
-                  d="M25 65 Q 120 58 220 62"
+                  d="M28 65 Q 120 58 220 62"
                   stroke="currentColor"
                   strokeWidth="1.8"
                   strokeLinecap="round"

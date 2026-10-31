@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { PERSONAL_INFO, EXPERIENCES, EDUCATION, TECH_CARDS } from '../data/portfolioData';
 import { X, Printer, Download, Mail, Linkedin, Github, Check } from 'lucide-react';
+import cvPdf from '@/assets/CV - Flávio Almeida.pdf';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -38,7 +39,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
   const handleCopySummary = () => {
     const text = `
-Flávio Almeida — Software Engineer & Team Leader
+Flávio Almeida — Software Engineer
 Email: ${PERSONAL_INFO.email}
 LinkedIn: ${PERSONAL_INFO.linkedin}
 GitHub: ${PERSONAL_INFO.github}
@@ -71,13 +72,21 @@ Java, Spring Boot, APIs REST, React, TypeScript, PostgreSQL, MySQL, n8n, Bubble,
       >
         {/* Actions Bar (hidden when printing) */}
         <div className="no-print flex items-center justify-between pb-6 mb-8 border-b border-zinc-200 dark:border-zinc-800">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrint}
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href={cvPdf}
+              download="CV - Flávio Almeida.pdf"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:text-zinc-950 font-medium text-xs transition-colors cursor-pointer"
             >
+              <Download className="w-3.5 h-3.5" />
+              <span>Baixar PDF</span>
+            </a>
+            <button
+              onClick={handlePrint}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 font-medium text-xs transition-colors cursor-pointer"
+            >
               <Printer className="w-3.5 h-3.5" />
-              <span>Imprimir / Salvar PDF</span>
+              <span>Imprimir</span>
             </button>
             <button
               onClick={handleCopySummary}
