@@ -456,19 +456,19 @@ export const Skills: React.FC = () => {
                 onClick={() => setActiveCardId(isExpanded ? null : card.id)}
                 className={`group relative p-6 rounded-[10px] transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[170px] ${
                   isExpanded
-                    ? 'bg-white dark:bg-zinc-850 ring-2 ring-zinc-900 dark:ring-white shadow-xl scale-[1.02]'
-                    : 'bg-white/80 dark:bg-zinc-900/70 hover:bg-white dark:hover:bg-zinc-850 border border-black/5 dark:border-white/5 hover:border-black/10 dark:hover:border-white/20 shadow-sm hover:shadow-md'
+                    ? 'bg-white dark:bg-zinc-800 ring-2 ring-zinc-900 dark:ring-white shadow-xl scale-[1.02]'
+                    : 'bg-white/80 dark:bg-zinc-900/70 hover:bg-white dark:hover:bg-zinc-800 border border-black/5 dark:border-white/5 hover:border-black/10 dark:hover:border-white/20 shadow-sm hover:shadow-md dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.5)] hover:-translate-y-1'
                 }`}
               >
                 {/* Center Icon */}
                 <div className="flex items-center justify-center py-3">
-                  <div className="w-14 h-14 rounded-[10px] bg-zinc-50 dark:bg-zinc-800/80 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center p-2.5">
+                  <div className="w-14 h-14 rounded-[10px] bg-zinc-50 dark:bg-zinc-800/80 group-hover:scale-110 group-hover:bg-zinc-100 dark:group-hover:bg-zinc-700/80 transition-all duration-300 flex items-center justify-center p-2.5">
                     {getIcon(card.iconName, card.id)}
                   </div>
                 </div>
 
                 {/* Card Title & Category Tag */}
-                <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800">
+                <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 group-hover:border-zinc-200 dark:group-hover:border-zinc-700/80 transition-colors">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-bold text-zinc-950 dark:text-white tracking-tight">
                       {card.name}
