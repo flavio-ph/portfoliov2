@@ -446,7 +446,7 @@ export const Skills: React.FC = () => {
         </div>
 
         {/* Tools & Technologies Grid matching reference */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 items-start">
           {filteredCards.map((card) => {
             const isExpanded = activeCardId === card.id;
 
@@ -479,11 +479,15 @@ export const Skills: React.FC = () => {
                   </div>
 
                   {/* Expandable description on click/hover */}
-                  {isExpanded && (
-                    <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed animate-fadeIn">
-                      {card.description}
-                    </p>
-                  )}
+                  <p
+                    className={`text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed transition-all duration-200 ${
+                      isExpanded
+                        ? 'mt-2 block opacity-100'
+                        : 'hidden group-hover:block group-hover:mt-2 group-hover:animate-fadeIn'
+                    }`}
+                  >
+                    {card.description}
+                  </p>
                 </div>
 
                 {/* Hint indicator */}

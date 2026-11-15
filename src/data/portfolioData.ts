@@ -618,33 +618,6 @@ export const PROJECTS: ProjectItem[] = [
     githubUrl: 'https://github.com/flavio-ph',
   },
   {
-    id: 'educchain',
-    title: 'EducChain',
-    subtitle: 'Solução educacional com gamificação e blockchain',
-    category: 'Full-stack',
-    theme: 'dark',
-    image: 'https://i.postimg.cc/4NwhzzTj/educ_Chain.gif',
-    overview:
-      'Plataforma educativa que registra certificados e conquistas acadêmicas de forma verificável, estimulando o engajamento estudantil através de missões e recompensas.',
-    challenge:
-      'Garantir a verificação imutável de emissão de certificados acadêmicos com baixo tempo de resposta e alta disponibilidade.',
-    solution:
-      'Uso de Golang para microsserviços de alto desempenho e verificação descentralizada, persistência relacional com MySQL e interface web React.',
-    myContribution: [
-      'Desenvolvimento de microsserviço de alta concorrência em Go (Golang).',
-      'Modelagem de dados no MySQL para gestão de alunos, cursos e registros de conclusão.',
-      'Interface web interativa em React com visualização de conquistas e trilhas de aprendizado.',
-    ],
-    featuresCompleted: [
-      'Validação descentralizada de emissão de certificados digitais',
-      'Trilhas pedagógicas gamificadas com progressão por etapas',
-      'Painel do instrutor para cadastro de conteúdos e avaliações',
-      'Verificação pública de autenticidade de diplomas',
-    ],
-    technologies: ['Golang', 'MySQL', 'TypeScript', 'React', 'Docker'],
-    githubUrl: 'https://github.com/flavio-ph',
-  },
-  {
     id: 'portfolio-fisio',
     title: 'Portfolio Fisio Marcela',
     subtitle: 'Site institucional moderno para profissional de saúde',

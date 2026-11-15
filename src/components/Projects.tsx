@@ -127,25 +127,20 @@ export const Projects: React.FC = () => {
         </div>
 
         {/* Quick Project Switcher Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-6 mb-2">
+        <div className="flex items-center sm:flex-wrap gap-2 overflow-x-auto sm:overflow-visible no-scrollbar px-3 sm:px-1 pt-3 pb-6 mb-2">
           {PROJECTS.map((p, idx) => {
             const isActive = idx === activeIndex;
             return (
               <button
                 key={p.id}
                 onClick={() => setActiveIndex(idx)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                className={`shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isActive
                     ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-md scale-105'
                     : 'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800/80 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                 }`}
               >
-                <span
-                  className={`w-2 h-2 rounded-full ${
-                    isActive ? 'bg-emerald-400 animate-pulse' : 'bg-zinc-400'
-                  }`}
-                />
-                <span>{p.title}</span>
+                {p.title}
               </button>
             );
           })}
