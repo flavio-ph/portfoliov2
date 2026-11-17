@@ -89,7 +89,7 @@ export const Projects: React.FC = () => {
     if (project.id === 'edunotify') {
       return [
         { icon: Globe, color: 'text-sky-500', text: 'Aplicação Web Administrativa' },
-        { icon: Smartphone, color: 'text-emerald-500', text: 'App Móvel para Responsáveis' },
+        { icon: Smartphone, color: 'text-[#FF8DA1]', text: 'App Móvel para Responsáveis' },
         { icon: Database, color: 'text-amber-500', text: 'Modelagem Relacional Segura' },
         { icon: Shield, color: 'text-purple-500', text: 'Autorização por Escopo (RBAC)' },
       ];
@@ -118,7 +118,7 @@ export const Projects: React.FC = () => {
           {/* Project Counter */}
           <div className="self-end sm:self-auto">
             <span className="font-mono text-sm sm:text-base font-bold text-zinc-400 dark:text-zinc-500">
-              <span className="text-zinc-950 dark:text-white text-xl sm:text-2xl font-black">
+              <span className="text-[#FF8DA1] text-xl sm:text-2xl font-black">
                 0{activeIndex + 1}
               </span>{' '}
               / 0{PROJECTS.length}
@@ -136,7 +136,7 @@ export const Projects: React.FC = () => {
                 onClick={() => setActiveIndex(idx)}
                 className={`shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-md scale-105'
+                    ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-md scale-105 ring-1 ring-[#FF8DA1]/70'
                     : 'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800/80 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                 }`}
               >
@@ -397,7 +397,7 @@ export const Projects: React.FC = () => {
                 onClick={() => setActiveIndex(idx)}
                 className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                   idx === activeIndex
-                    ? 'w-10 bg-zinc-950 dark:bg-white shadow-sm'
+                    ? 'w-10 bg-[#FF8DA1] shadow-[0_0_12px_rgba(255,141,161,0.5)]'
                     : 'w-2.5 bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-700 dark:hover:bg-zinc-600'
                 }`}
                 aria-label={`Ir para ${p.title}`}

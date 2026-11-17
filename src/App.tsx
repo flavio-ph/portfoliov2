@@ -65,7 +65,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#F0F0F0] dark:bg-[#0d0d0f] text-[#111111] dark:text-[#f4f4f5] transition-colors duration-300 selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-black">
+    <div className="relative min-h-screen bg-[#F0F0F0] dark:bg-[#0d0d0f] text-[#111111] dark:text-[#f4f4f5] transition-colors duration-300 selection:bg-[#FF8DA1] selection:text-zinc-950 dark:selection:bg-[#FF8DA1] dark:selection:text-zinc-950">
       {/* Top Diffuse Pastel Ambient Glow */}
       <div className="ambient-glow-top fixed top-0 left-0 right-0 h-[650px] -z-0 pointer-events-none opacity-90 transition-opacity duration-500" />
 

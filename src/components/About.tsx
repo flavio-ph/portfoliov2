@@ -57,7 +57,7 @@ export const About: React.FC = () => {
               {PROFESSIONAL_PRINCIPLES.map((principle, index) => (
                 <div
                   key={principle.title}
-                  className={`p-6 sm:p-7 rounded-[10px] bg-white/60 dark:bg-white/[0.04] backdrop-blur-md border border-black/5 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:bg-white/80 dark:hover:bg-white/[0.07] hover:border-black/10 dark:hover:border-white/20 ${
+                  className={`p-6 sm:p-7 rounded-[10px] bg-white/60 dark:bg-white/[0.04] backdrop-blur-md border border-black/5 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:bg-white/80 dark:hover:bg-white/[0.07] hover:border-[#FF8DA1]/40 dark:hover:border-[#FF8DA1]/30 ${
                     index === PROFESSIONAL_PRINCIPLES.length - 1 ? 'md:col-span-2' : ''
                   }`}
                 >

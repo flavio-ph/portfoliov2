@@ -104,7 +104,7 @@ export const Services: React.FC = () => {
             <article
               key={service.id}
               onClick={() => setSelectedService(service)}
-              className="group relative rounded-2xl p-7 sm:p-8 bg-white/70 dark:bg-white/[0.03] backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.25)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.07)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
+              className="group relative rounded-2xl p-7 sm:p-8 bg-white/70 dark:bg-white/[0.03] backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.25)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.07)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] hover:border-[#FF8DA1]/30 dark:hover:border-[#FF8DA1]/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden"
             >
               {/* Subtle Ambient Hover Glow */}
               <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-br from-zinc-200/50 via-zinc-100/10 to-transparent dark:from-white/[0.05] dark:via-white/[0.01] rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-500" />
@@ -115,7 +115,7 @@ export const Services: React.FC = () => {
                   <div className="w-11 h-11 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/70 dark:border-zinc-700/60 flex items-center justify-center text-zinc-900 dark:text-zinc-100 group-hover:scale-105 group-hover:bg-zinc-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-zinc-950 transition-all duration-300 shadow-sm">
                     {getServiceIcon(service.iconType)}
                   </div>
-                  <span className="text-xs font-mono font-bold text-zinc-400 dark:text-zinc-600 tracking-wider">
+                  <span className="text-xs font-mono font-bold text-zinc-400 dark:text-zinc-600 group-hover:text-[#FF8DA1] tracking-wider transition-colors">
                     {service.orderNumber}
                   </span>
                 </div>

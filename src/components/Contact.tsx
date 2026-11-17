@@ -117,7 +117,7 @@ export const Contact: React.FC = () => {
           <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-4">
             
             {/* Field: Nome */}
-            <div className="flex flex-col sm:flex-row sm:items-center py-2.5 border-b border-zinc-100 dark:border-zinc-800 focus-within:border-zinc-900 dark:focus-within:border-zinc-200 transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center py-2.5 border-b border-zinc-100 dark:border-zinc-800 focus-within:border-[#FF8DA1] transition-colors">
               <label
                 htmlFor="name"
                 className="w-24 text-xs font-semibold text-zinc-500 dark:text-zinc-400 shrink-0 pb-1 sm:pb-0"
@@ -138,7 +138,7 @@ export const Contact: React.FC = () => {
 
             {/* Field: Mensagem (Textarea) */}
             <div className="pt-2">
-              <div className="min-h-[160px] p-4 rounded-[10px] bg-zinc-50/70 dark:bg-zinc-800/60 border border-zinc-100 dark:border-zinc-800 focus-within:ring-1 focus-within:ring-zinc-900 dark:focus-within:ring-zinc-200 transition-all">
+              <div className="min-h-[160px] p-4 rounded-[10px] bg-zinc-50/70 dark:bg-zinc-800/60 border border-zinc-100 dark:border-zinc-800 focus-within:ring-1 focus-within:ring-[#FF8DA1]/60 focus-within:border-[#FF8DA1] transition-all">
                 <textarea
                   id="message"
                   name="message"
@@ -206,7 +206,7 @@ export const Contact: React.FC = () => {
               <Mail className="w-3.5 h-3.5 text-zinc-300" />
               <span>{PERSONAL_INFO.email}</span>
               {copiedEmail ? (
-                <span className="flex items-center gap-1 text-[11px] text-emerald-400">
+                <span className="flex items-center gap-1 text-[11px] text-[#FF8DA1]">
                   <Check className="w-3.5 h-3.5" />
                   Copiado!
                 </span>

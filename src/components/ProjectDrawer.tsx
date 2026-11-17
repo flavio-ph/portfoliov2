@@ -241,14 +241,14 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
 
           {/* Completed Features */}
           <div className="p-5 rounded-xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200/70 dark:border-zinc-800">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#FF8DA1] mb-3 flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-[#FF8DA1]" />
               Funcionalidades Implementadas
             </h4>
             <div className="space-y-2">
               {project.featuresCompleted.map((feature, idx) => (
                 <div key={idx} className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#FF8DA1] shrink-0 mt-0.5" />
                   <span>{feature}</span>
                 </div>
               ))}

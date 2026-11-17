@@ -456,8 +456,8 @@ export const Skills: React.FC = () => {
                 onClick={() => setActiveCardId(isExpanded ? null : card.id)}
                 className={`group relative p-6 rounded-[10px] transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[170px] ${
                   isExpanded
-                    ? 'bg-white dark:bg-zinc-800 ring-2 ring-zinc-900 dark:ring-white shadow-xl scale-[1.02]'
-                    : 'bg-white/80 dark:bg-zinc-900/70 hover:bg-white dark:hover:bg-zinc-800 border border-black/5 dark:border-white/5 hover:border-black/10 dark:hover:border-white/20 shadow-sm hover:shadow-md dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.5)] hover:-translate-y-1'
+                    ? 'bg-white dark:bg-zinc-800 ring-2 ring-[#FF8DA1] shadow-[0_0_18px_rgba(255,141,161,0.25)] scale-[1.02]'
+                    : 'bg-white/80 dark:bg-zinc-900/70 hover:bg-white dark:hover:bg-zinc-800 border border-black/5 dark:border-white/5 hover:border-[#FF8DA1]/40 dark:hover:border-[#FF8DA1]/30 shadow-sm hover:shadow-md dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.5)] hover:-translate-y-1'
                 }`}
               >
                 {/* Center Icon */}
@@ -491,7 +491,7 @@ export const Skills: React.FC = () => {
                 </div>
 
                 {/* Hint indicator */}
-                <div className="absolute top-3 right-3 text-zinc-300 dark:text-zinc-600 group-hover:text-zinc-500 dark:group-hover:text-zinc-400 transition-colors">
+                <div className="absolute top-3 right-3 text-zinc-300 dark:text-zinc-600 group-hover:text-[#FF8DA1] dark:group-hover:text-[#FF8DA1] transition-colors">
                   <Info className="w-3.5 h-3.5" />
                 </div>
               </div>

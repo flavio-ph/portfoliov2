@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --color-zinc-850: #1c1c21;
+  --color-accent: #FF8DA1;
+  --color-accent-hover: #ff758d;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -13,10 +16,11 @@
     --text-primary: #111111;
     --text-muted: #858585;
     --border-subtle: rgba(0, 0, 0, 0.07);
+    --accent: #FF8DA1;
   }
 
   html {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -36,32 +40,32 @@
 /* Subtle diffuse pastel background glow */
 .ambient-glow-top {
   background: 
-    radial-gradient(ellipse 65% 50% at 20% 0%, rgba(254, 240, 138, 0.45) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 45% at 50% 5%, rgba(254, 215, 170, 0.40) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 45% at 75% 0%, rgba(244, 208, 255, 0.45) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(191, 219, 254, 0.45) 0%, transparent 60%);
+    radial-gradient(ellipse 65% 50% at 20% 0%, rgba(255, 141, 161, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 50% 5%, rgba(254, 215, 170, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 75% 0%, rgba(255, 141, 161, 0.30) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(191, 219, 254, 0.35) 0%, transparent 60%);
 }
 
 .dark .ambient-glow-top {
   background: 
-    radial-gradient(ellipse 65% 50% at 20% 0%, rgba(234, 179, 8, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 45% at 50% 5%, rgba(249, 115, 22, 0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 45% at 75% 0%, rgba(168, 85, 247, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(59, 130, 246, 0.12) 0%, transparent 60%);
+    radial-gradient(ellipse 65% 50% at 20% 0%, rgba(255, 141, 161, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 50% 5%, rgba(249, 115, 22, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 75% 0%, rgba(255, 141, 161, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
 }
 
 .ambient-glow-bottom {
   background: 
-    radial-gradient(ellipse 70% 50% at 25% 100%, rgba(244, 208, 255, 0.40) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 45% at 60% 100%, rgba(254, 215, 170, 0.35) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 100%, rgba(191, 219, 254, 0.35) 0%, transparent 65%);
+    radial-gradient(ellipse 70% 50% at 25% 100%, rgba(255, 141, 161, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 45% at 60% 100%, rgba(254, 215, 170, 0.30) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 100%, rgba(191, 219, 254, 0.30) 0%, transparent 65%);
 }
 
 .dark .ambient-glow-bottom {
   background: 
-    radial-gradient(ellipse 70% 50% at 25% 100%, rgba(168, 85, 247, 0.10) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 45% at 60% 100%, rgba(249, 115, 22, 0.08) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 100%, rgba(59, 130, 246, 0.10) 0%, transparent 65%);
+    radial-gradient(ellipse 70% 50% at 25% 100%, rgba(255, 141, 161, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 45% at 60% 100%, rgba(249, 115, 22, 0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 65%);
 }
 
 /* Continuous text ticker / carousel */

@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({ isDark, toggleTheme, activeSecti
             <span className="text-zinc-400 dark:text-zinc-500 font-normal mr-0.5">[</span>
             <span className="relative">
               fa
-              <span className="absolute -bottom-0.5 left-0 w-full h-[2px] bg-zinc-900 dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              <span className="absolute -bottom-0.5 left-0 w-full h-[2px] bg-[#FF8DA1] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </span>
             <span className="text-zinc-400 dark:text-zinc-500 font-normal ml-0.5">]</span>
           </span>
@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({ isDark, toggleTheme, activeSecti
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn de Flávio Almeida"
-              className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors"
+              className="text-zinc-600 hover:text-[#FF8DA1] dark:text-zinc-400 dark:hover:text-[#FF8DA1] transition-colors"
             >
               <Linkedin className="w-4 h-4" />
             </a>
@@ -104,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ isDark, toggleTheme, activeSecti
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub de Flávio Almeida"
-              className="text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-colors"
+              className="text-zinc-600 hover:text-[#FF8DA1] dark:text-zinc-400 dark:hover:text-[#FF8DA1] transition-colors"
             >
               <Github className="w-4 h-4" />
             </a>

@@ -71,9 +71,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
           </div>
 
           {/* Subtle Status Line below CTA */}
-          <div className="mt-8 flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>Disponível para novos projetos e engenharia de software</span>
-          </div>
+
         </div>
 
         {/* Right Column: Visual Composition with Official 3D Avatar */}
@@ -81,7 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
           <div className="relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px] flex items-center justify-center">
 
             {/* Ambient Backlight Glow behind the avatar */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-amber-200/50 via-rose-200/40 to-sky-200/50 dark:from-amber-500/15 dark:via-purple-500/15 dark:to-blue-500/15 rounded-full blur-3xl -z-10 transform scale-95" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#FF8DA1]/30 via-rose-300/20 to-sky-200/40 dark:from-[#FF8DA1]/20 dark:via-purple-500/15 dark:to-blue-500/10 rounded-full blur-3xl -z-10 transform scale-95" />
 
             {/* Official 3D Memoji Avatar Image */}
             <div className="relative z-10 flex flex-col items-center select-none group">
